@@ -1,5 +1,5 @@
 """
-This module is the main module for the FastAPI app. FastApi
+This module is the main module for the FastAPI app.
 """
 
 # --------------------------------------------------------------------------------
