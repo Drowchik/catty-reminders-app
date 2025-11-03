@@ -1,5 +1,5 @@
 """
-This module is the main module for the FastAPI app. das
+This module is the main module for the FastAPI app.
 """
 
 # --------------------------------------------------------------------------------
