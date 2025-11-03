@@ -28,7 +28,7 @@ app.include_router(reminders.router)
 
 
 # --------------------------------------------------------------------------------
-# Static Files
+# Static File
 # --------------------------------------------------------------------------------
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
