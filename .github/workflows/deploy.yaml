@@ -27,7 +27,7 @@ jobs:
               parallels@course.prafdin.ru "
             cd /home/parallels/PycharmProjects/catty-reminders-app
             echo 'Pulling latest code from github-actions branch...'
-            git pull origin github-actions
+            git pull origin git_hub_actions
             echo 'Running app...'
             sudo systemctl restart catty-reminders-app.service
           "
