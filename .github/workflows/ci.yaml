@@ -26,7 +26,7 @@ jobs:
           pip install -r requirements.txt
         fi
 
-    - name: Install Playwright browsers
+    - name: Install browsers
       run: |
         python -m playwright install
 
