@@ -1,0 +1,33 @@
+name: CD
+
+on:
+  release:
+    type: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/vm_key
+          chmod 600 ~/.ssh/vm_key
+
+      - name: Deploy to VM
+        run: |
+          ssh -o StrictHostKeyChecking=no \
+              -o ConnectTimeout=15 \
+              -i ~/.ssh/vm_key \
+              -p 2450 \
+              parallels@course.prafdin.ru "
+            cd /home/parallels/PycharmProjects/catty-reminders-app
+            echo 'Pulling latest code from github-actions branch...'
+            git pull origin github-actions
+            echo 'Running app...'
+            sudo systemctl restart catty-reminders-app.service
+          "
