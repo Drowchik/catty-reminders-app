@@ -9,23 +9,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/vm_key
-          chmod 600 ~/.ssh/vm_key
-
-      - name: Deploy to VM
-        run: |
-          ssh -o StrictHostKeyChecking=no \
-              -o ConnectTimeout=15 \
-              -i ~/.ssh/vm_key \
-              -p 2450 \
-              parallels@course.prafdin.ru "
-            cd /home/parallels/PycharmProjects/catty-reminders-app
-            git pull origin git_hub_actions
-            sudo systemctl restart catty-reminders-app.service
-          "
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}      # Берем из секретов
+          port: ${{ secrets.PORT }}      # Берем из секретов
+          username: ${{ secrets.USERNAME }} # Берем из секретов
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo docker pull ghcr.io/${{ github.repository }}:latest
+            
+            sudo docker stop catty-container || true
+            
+            sudo docker rm catty-container || true
+            
+            sudo docker run -d --restart always -p 8181:8181 --name catty-container ghcr.io/${{ github.repository }}:latest
