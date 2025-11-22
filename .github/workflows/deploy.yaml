@@ -17,12 +17,15 @@ jobs:
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            IMAGE_NAME="ghcr.io/${{ steps.lower.outputs.owner_lower }}/${{ github.event.repository.name }}:git_hub_actions"
+            IMAGE_NAME="ghcr.io/${{ steps.lower.outputs.owner_lower }}/${{ github.event.repository.name }}:sha-${GITHUB_SHA}"
             sudo docker pull "$IMAGE_NAME"
             sudo docker stop catty-container || true
             sudo docker rm catty-container || true
