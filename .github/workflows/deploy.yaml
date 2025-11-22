@@ -22,7 +22,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            IMAGE_NAME="ghcr.io/${{ steps.lower.outputs.owner_lower }}/${{ github.event.repository.name }}:git_hub_actions}"
+            IMAGE_NAME="ghcr.io/${{ steps.lower.outputs.owner_lower }}/${{ github.event.repository.name }}:git_hub_actions"
             echo $IMAGE_NAME
             sudo docker pull "$IMAGE_NAME"
             sudo docker stop catty-container || true
