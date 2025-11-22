@@ -12,15 +12,17 @@ jobs:
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.HOST }}      # Берем из секретов
-          port: ${{ secrets.PORT }}      # Берем из секретов
-          username: ${{ secrets.USERNAME }} # Берем из секретов
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo docker pull ghcr.io/${{ github.repository }}:latest
+            REPO_NAME="ghcr.io/${{ github.repository_owner | lower }}/${{ github.event.repository.name }}:latest"
+
+            sudo docker pull $REPO_NAME
             
             sudo docker stop catty-container || true
             
             sudo docker rm catty-container || true
             
-            sudo docker run -d --restart always -p 8181:8181 --name catty-container ghcr.io/${{ github.repository }}:latest
+            sudo docker run -d --restart always -p 8181:8181 --name catty-container $REPO_NAME
