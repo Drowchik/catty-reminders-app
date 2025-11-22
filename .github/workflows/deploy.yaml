@@ -9,6 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Prepare lowercase repo owner
+        id: lower
+        run: |
+          echo "owner_lower=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_OUTPUT
+
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -17,7 +22,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            IMAGE_NAME="ghcr.io/${{ lowercase(github.repository_owner) }}/${{ github.event.repository.name }}:git_hub_actions"
+            IMAGE_NAME="ghcr.io/${{ steps.lower.outputs.owner_lower }}/${{ github.event.repository.name }}:git_hub_actions"
             sudo docker pull "$IMAGE_NAME"
             sudo docker stop catty-container || true
             sudo docker rm catty-container || true
