@@ -24,7 +24,7 @@ jobs:
           script: |
             IMAGE_NAME="ghcr.io/${{ steps.lower.outputs.owner_lower }}/${{ github.event.repository.name }}:git_hub_actions"
             echo $IMAGE_NAME
-            sudo docker pull "$IMAGE_NAME"
+            sudo docker pull --progress=plain "$IMAGE_NAME"
             sudo docker stop catty-container || true
             sudo docker rm catty-container || true
             sudo docker run -d --restart always -p 8181:8181 --name catty-container "$IMAGE_NAME"
