@@ -6,7 +6,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./config.json:/catty-reminders-app/config.json:ro
+      - ./config.json:/PycharmProjects/catty-reminders-app/config.json:ro
     restart: unless-stopped
 
   db:
