@@ -23,16 +23,16 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |          
             echo 'Pulling latest images...'
-            docker compose -f ~/PycharmProjects/catty-reminders-app/docker-compose.yml pull
+            docker compose -f ~/PycharmProjects/catty-reminders-app/docker-compose.yaml pull
             
             echo 'Stopping and removing old containers...'
-            docker compose -f ~/PycharmProjects/catty-reminders-app/docker-compose.yml down
+            docker compose -f ~/PycharmProjects/catty-reminders-app/docker-compose.yaml down
       
             echo 'Starting new containers with Docker Compose...'
-            docker compose -f ~/PycharmProjects/catty-reminders-app/docker-compose.yml up -d
+            docker compose -f ~/PycharmProjects/catty-reminders-app/docker-compose.yaml up -d
             
             echo 'Cleaning up...'
             docker image prune -f
             
             echo 'Docker Compose deployment completed!'
-            docker compose -f ~/PycharmProjects/catty-reminders-app/docker-compose.yml ps
+            docker compose -f ~/PycharmProjects/catty-reminders-app/docker-compose.yaml ps
