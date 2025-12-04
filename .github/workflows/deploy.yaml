@@ -35,4 +35,4 @@ jobs:
             docker image prune -f
             
             echo 'Docker Compose deployment completed!'
-            docker compose -f ~PycharmProjects/catty-reminders-app/docker-compose.yml ps
+            docker compose -f ~/PycharmProjects/catty-reminders-app/docker-compose.yml ps
