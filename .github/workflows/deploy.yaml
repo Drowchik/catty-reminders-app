@@ -21,10 +21,18 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            IMAGE_NAME="ghcr.io/${{ steps.lower.outputs.owner_lower }}/${{ github.event.repository.name }}:git_hub_actions"
-            echo $IMAGE_NAME
-            sudo docker pull "$IMAGE_NAME"
-            sudo docker stop catty-container || true
-            sudo docker rm catty-container || true
-            sudo docker run -d --restart always -p 8181:8181 --name catty-container "$IMAGE_NAME"
+          script: |          
+            echo 'Pulling latest images...'
+            docker compose -f ~/PycharmProjects/catty-reminders-app/docker-compose.yml pull
+            
+            echo 'Stopping and removing old containers...'
+            docker compose -f ~/PycharmProjects/catty-reminders-app/docker-compose.yml down
+      
+            echo 'Starting new containers with Docker Compose...'
+            docker compose -f ~/PycharmProjects/catty-reminders-app/docker-compose.yml up -d
+            
+            echo 'Cleaning up...'
+            docker image prune -f
+            
+            echo 'Docker Compose deployment completed!'
+            docker compose -f ~PycharmProjects/catty-reminders-app/docker-compose.yml ps

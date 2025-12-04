@@ -1,0 +1,22 @@
+services:
+  app:
+    image: ghcr.io/drowchik/catty-reminders-app:git_hub_actions
+    ports:
+      - "8181:8181"
+    depends_on:
+      - db
+    volumes:
+      - ./config.json:/catty-reminders-app/config.json:ro
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: mypass
+      MYSQL_DATABASE: catty_reminders
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
