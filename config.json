@@ -1,0 +1,31 @@
+{
+  "db_path": "reminder_db.json",
+  "secret_key": "Cats are awesome!",
+  "auth_mode": "local",
+  "users": {
+    "heisenberg": "P@ssw0rd",
+    "tester": "foobar123"
+  },
+  "user_roles": {
+    "tester": "viewer"
+  },
+  "ldap": {
+    "server": "10.0.10.2",
+    "port": 636,
+    "use_ssl": true,
+    "base_dn": "DC=todolist,DC=lan",
+    "bind_user": "",
+    "bind_password": "",
+    "email_domain": "todolist.lan",
+    "staff_ou": "OU=Staff,DC=todolist,DC=lan",
+    "admin_group": "CN=Catty-Admins,OU=Groups,DC=todolist,DC=lan",
+    "viewer_group": "CN=Catty-Users,OU=Groups,DC=todolist,DC=lan"
+  },
+  "db_config": {
+    "host": "db",
+    "port": 3306,
+    "user": "root",
+    "password": "mypass",
+    "database": "catty_reminders"
+  }
+}

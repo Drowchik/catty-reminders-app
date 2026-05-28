@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>Login | Catty reminders app</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/shared.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+</head>
+<body>
+    <div class="login-page">
+        <div class="paper-card form">
+            <div class="login-form-top">
+                <h1 class="login-form-top-title">Lab45</h1>
+                <p class="login-form-top-subtitle">The reminders app</p>
+                <img id="catty-logo" src="/static/img/logos/catty-100px.png" />
+            </div>
+            <form action="/login" method="post" class="login-form">
+                <div>
+                    <label for="username">Login / Email</label>
+                    <input type="text" placeholder="user or user@todolist.lan" name="username" id="username" required />
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" placeholder="Active Directory password" name="password" id="password" required />
+                </div>
+                <div>
+                    <button type="submit" data-testid="login-button">Login</button>
+                </div>
+                {% if invalid %}
+                <div class="invalid-login-warning">
+                    <p>Invalid login! Please retry.</p>
+                </div>
+                {% elif logged_out %}
+                <div class="invalid-login-warning">
+                    <p>Successfully logged out.</p>
+                </div>
+                {% elif unauthorized %}
+                <div class="invalid-login-warning">
+                    <p>Please login first.</p>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</body>
+</html>

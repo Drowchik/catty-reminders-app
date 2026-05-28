@@ -1,0 +1,27 @@
+<div
+  class="reminder-row{{ " completed" if reminder_item.completed }}"
+  data-id="reminder-item-row-{{ reminder_item.id }}"
+  hx-target="this"
+  hx-swap="outerHTML"
+>
+  <p
+    {% if can_edit|default(false) %}
+    hx-patch="/reminders/item-row-strike/{{ reminder_item.id }}"
+    hx-trigger="click"
+    {% endif %}
+  >
+    {{ reminder_item.description }}
+  </p>
+  {% if can_edit|default(false) %}
+  <img
+    src="/static/img/icons/icon-edit.svg"
+    hx-get="/reminders/item-row-edit/{{ reminder_item.id }}"
+    hx-trigger="click"
+  />
+  <img
+    src="/static/img/icons/icon-delete.svg"
+    hx-delete="/reminders/item-row/{{ reminder_item.id }}"
+    hx-trigger="click"
+  />
+  {% endif %}
+</div>
